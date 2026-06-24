@@ -1,0 +1,247 @@
+# aDev Browser
+
+### Zero-Cache Developer Browser for Windows
+
+aDev Browser is a Windows-native browser built specifically for web developers who need completely fresh sessions, accurate responsive testing, and full Chromium DevTools without cache interference.
+
+Developed by **Muhammad Haseeb**
+
+
+---
+
+## Why aDev Browser?
+
+Modern browsers aggressively cache content, retain cookies, preserve local storage, and maintain session state. This often causes developers to waste time debugging stale assets, authentication issues, and inconsistent responsive behavior.
+
+aDev Browser solves that problem by making every browsing session completely disposable.
+
+When a tab closes, everything is destroyed:
+
+* Cookies
+* Cache
+* LocalStorage
+* SessionStorage
+* IndexedDB
+* Service Workers
+* Session Data
+
+No persistence. No stale content. No surprises.
+
+---
+
+## Core Features
+
+### Ephemeral Sessions
+
+Every tab runs in complete isolation.
+
+* No shared cookies
+* No shared cache
+* No shared storage
+* No cross-tab authentication leakage
+
+Open the same website in two tabs and log into one.
+
+The second tab remains completely anonymous.
+
+---
+
+### Full Chromium DevTools
+
+Built using Chromium and CefSharp.
+
+Includes:
+
+* Elements
+* Console
+* Network
+* Sources
+* Application
+* Performance
+* Memory
+
+DevTools remain available in release builds.
+
+---
+
+### Responsive View
+
+A dedicated responsive testing workspace.
+
+Three device viewports render simultaneously:
+
+| Device             | Resolution  |
+| ------------------ | ----------- |
+| iPad Pro 12.9      | 1024 × 1366 |
+| Samsung Galaxy S24 | 412 × 915   |
+| iPhone 16 Pro      | 393 × 852   |
+
+Each pane:
+
+* Uses a real Chromium instance
+* Uses a real device viewport
+* Uses a real device user-agent
+* Has independent DevTools
+* Has isolated storage
+
+Not a CSS simulation.
+
+Actual browser rendering.
+
+---
+
+### Scroll Synchronization
+
+Optional synchronized scrolling across all responsive panes.
+
+Perfect for:
+
+* Long landing pages
+* Shopify themes
+* WordPress layouts
+* Ecommerce product pages
+* Responsive QA testing
+
+---
+
+### Nuke Cache
+
+Instantly remove:
+
+* Cookies
+* Cache
+* Local Storage
+* Session Storage
+* IndexedDB
+
+Then reload the page.
+
+Shortcut:
+
+```text
+Ctrl + Shift + Delete
+```
+
+---
+
+### Localhost Quick Access
+
+Quick-launch common development ports:
+
+* localhost:3000
+* localhost:5173
+* localhost:8000
+* localhost:8080
+
+Fully customizable.
+
+---
+
+### User-Agent Switching
+
+Built-in presets:
+
+* Windows Chrome
+* iPhone Safari
+* Samsung Galaxy Chrome
+* Custom User-Agent
+
+Apply per tab.
+
+---
+
+### Network Throttling
+
+Built-in presets:
+
+* None
+* Slow 3G
+* Fast 3G
+* 4G
+
+Useful for performance testing and mobile simulations.
+
+---
+
+## Keyboard Shortcuts
+
+| Action          | Shortcut              |
+| --------------- | --------------------- |
+| New Tab         | Ctrl + T              |
+| Close Tab       | Ctrl + W              |
+| Reload          | F5                    |
+| Hard Reload     | Ctrl + Shift + R      |
+| DevTools        | F12                   |
+| Address Bar     | Ctrl + L              |
+| Responsive View | Ctrl + Shift + M      |
+| Nuke Session    | Ctrl + Shift + Delete |
+| Next Tab        | Ctrl + Tab            |
+| Previous Tab    | Ctrl + Shift + Tab    |
+
+---
+
+## Technology Stack
+
+* .NET 8
+* WPF
+* CefSharp
+* Chromium Embedded Framework (CEF)
+
+---
+
+## Platform
+
+Supported Operating Systems:
+
+* Windows 10 (64-bit)
+* Windows 11 (64-bit)
+
+---
+
+## Design Goals
+
+* Startup under 2.5 seconds
+* Less than 150MB idle RAM
+* Less than 500MB RAM with 5 tabs
+* True zero-persistence architecture
+* Full Chromium compatibility
+* Native Windows performance
+
+---
+
+## Use Cases
+
+* WordPress Development
+* Shopify Theme Development
+* Web Application Testing
+* Responsive QA
+* Staging Environment Validation
+* Authentication Testing
+* Cache-Free Debugging
+* Frontend Development
+
+---
+
+## Author
+
+### Muhammad Haseeb
+
+Founder — Advertpreneur
+
+Specializing in:
+
+* Web Development
+* Shopify Development
+* WordPress Solutions
+* AI-Powered Applications
+* Developer Productivity Tools
+
+GitHub: https://github.com/haseebgb92
+
+---
+
+## License
+
+Copyright © Muhammad Haseeb
+
+All Rights Reserved.
