@@ -6,7 +6,7 @@ aDev Browser is a Windows-native browser built specifically for web developers w
 
 Developed by **Muhammad Haseeb**
 
-https://github.com/haseebgb92/aDev-Browser/blob/14fe81c397ad3f53704e5d58cf5e73da083828e7/splash%20screen.png
+![aDev Browser Splash Screen](https://github.com/haseebgb92/aDev-Browser/blob/main/splash%20screen.png?raw=true)
 ---
 
 ## Why aDev Browser?
