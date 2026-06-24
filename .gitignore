@@ -1,0 +1,9 @@
+bin/
+obj/
+Output/
+.vs/
+*.user
+*.suo
+*.exe
+*.msi
+*.zip

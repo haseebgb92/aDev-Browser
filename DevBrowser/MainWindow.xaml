@@ -1,0 +1,222 @@
+<Window x:Class="DevBrowser.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DevBrowser"
+        xmlns:converters="clr-namespace:DevBrowser.Converters"
+        mc:Ignorable="d"
+        Title="aDevBrowser — Zero Persistence Developer Browser" Height="800" Width="1200"
+        Background="#F3F4F6" Foreground="Black"
+        WindowStyle="None" AllowsTransparency="True" Icon="icon.ico">
+    
+    <Window.Resources>
+        <converters:SelectedTabBrushConverter x:Key="SelectedTabBrushConverter" />
+        
+        <Style x:Key="QuickBarButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="#4B5563" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="5,2" />
+            <Setter Property="FontSize" Value="10" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="Black" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <Window.InputBindings>
+        <KeyBinding Key="T" Modifiers="Control" Command="{Binding NewTabCommand}" />
+        <KeyBinding Key="W" Modifiers="Control" Command="{Binding CloseTabCommand}" />
+        <KeyBinding Key="R" Modifiers="Control" Command="{Binding ReloadCommand}" />
+        <KeyBinding Key="R" Modifiers="Control+Shift" Command="{Binding HardReloadCommand}" />
+        <KeyBinding Key="I" Modifiers="Control+Shift" Command="{Binding DevToolsCommand}" />
+        <KeyBinding Key="F12" Command="{Binding DevToolsCommand}" />
+        <KeyBinding Key="L" Modifiers="Control" Command="{Binding FocusAddressBarCommand}" />
+        <KeyBinding Key="Delete" Modifiers="Control+Shift" Command="{Binding NukeCommand}" />
+        <KeyBinding Key="M" Modifiers="Control+Shift" Command="{Binding ResponsiveViewCommand}" />
+    </Window.InputBindings>
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="40" GlassFrameThickness="0" CornerRadius="8" ResizeBorderThickness="8" />
+    </WindowChrome.WindowChrome>
+
+    <Border BorderBrush="#D1D5DB" BorderThickness="1" CornerRadius="8" Background="#FFFFFF" ClipToBounds="True">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" /> <!-- TitleBar / TabStrip -->
+                <RowDefinition Height="Auto" /> <!-- Toolbar -->
+                <RowDefinition Height="Auto" /> <!-- Quick Bar -->
+                <RowDefinition Height="*" /> <!-- Tab Content -->
+                <RowDefinition Height="25" /> <!-- Status Bar -->
+            </Grid.RowDefinitions>
+
+            <!-- Title Bar / Tab Strip -->
+            <Grid Grid.Row="0" Background="#E5E7EB">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <ItemsControl x:Name="TabStripControl" Grid.Column="0">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border WindowChrome.IsHitTestVisibleInChrome="True" Background="{Binding IsSelected, Converter={StaticResource SelectedTabBrushConverter}}" 
+                                    BorderBrush="#D1D5DB" BorderThickness="0,0,1,0" Width="150" Height="40" Padding="10,0">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{Binding Title}" Foreground="Black" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" />
+                                    <Button Grid.Column="1" Content="✕" Background="Transparent" Foreground="#6B7280" BorderThickness="0" 
+                                            Width="20" Height="20" VerticalAlignment="Center" Click="CloseTab_Click" Tag="{Binding}" />
+                                </Grid>
+                                <Border.InputBindings>
+                                    <MouseBinding MouseAction="LeftClick" Command="{Binding SelectCommand}" />
+                                </Border.InputBindings>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <StackPanel Grid.Column="1" WindowChrome.IsHitTestVisibleInChrome="True" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,10,0">
+                    <Button Content="+" Width="30" Height="30" Background="Transparent" Foreground="Black" BorderThickness="0" Click="NewTab_Click" />
+                    <Button Content="_" Width="30" Height="30" Background="Transparent" Foreground="Black" BorderThickness="0" Click="Minimize_Click" />
+                    <Button Content="□" Width="30" Height="30" Background="Transparent" Foreground="Black" BorderThickness="0" Click="Maximize_Click" />
+                    <Button Content="✕" Width="30" Height="30" Background="Transparent" Foreground="Black" BorderThickness="0" Click="Close_Click" />
+                </StackPanel>
+            </Grid>
+
+            <!-- Toolbar -->
+            <Border Grid.Row="1" Background="#F9FAFB" BorderBrush="#D1D5DB" BorderThickness="0,1,0,1" Padding="10,5">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Orientation="Horizontal">
+                        <Button Content="←" Width="30" Height="30" Background="Transparent" Foreground="Black" BorderThickness="0" Click="Back_Click" Margin="0,0,5,0" />
+                        <Button Content="→" Width="30" Height="30" Background="Transparent" Foreground="Black" BorderThickness="0" Click="Forward_Click" Margin="0,0,5,0" />
+                        <Button Content="↻" Width="30" Height="30" Background="Transparent" Foreground="Black" BorderThickness="0" Click="Reload_Click" Margin="0,0,5,0" />
+                        
+                        <ComboBox x:Name="ThrottleBox" Width="100" Height="30" Background="#FFFFFF" Foreground="Black" BorderThickness="1" BorderBrush="#D1D5DB" SelectionChanged="ThrottleBox_SelectionChanged" Margin="5,0">
+                            <ComboBoxItem Content="No Throttling" IsSelected="True" Foreground="Black" />
+                            <ComboBoxItem Content="Fast 3G" Tag="500,1000,40" Foreground="Black" />
+                            <ComboBoxItem Content="Slow 3G" Tag="200,400,100" Foreground="Black" />
+                            <ComboBoxItem Content="Offline" Tag="0,0,0" Foreground="Black" />
+                        </ComboBox>
+
+                        <Button Content="Nuke" Background="#E74C3C" Foreground="White" Padding="10,0" Margin="5,0" Click="Nuke_Click" BorderThickness="0" />
+                    </StackPanel>
+
+                    <TextBox x:Name="AddressBar" Grid.Column="1" Margin="10,0" Background="#FFFFFF" Foreground="Black" 
+                             BorderThickness="1" BorderBrush="#D1D5DB" VerticalContentAlignment="Center" Padding="10,0" KeyDown="AddressBar_KeyDown" />
+
+                    <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                        <Button Content="⋮" FontSize="18" FontWeight="Bold" Width="30" Height="30" Background="Transparent" Foreground="Black" BorderThickness="0" Click="MenuButton_Click">
+                            <Button.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="Headers" Click="ToggleHeaders_Click" />
+                                    <MenuItem Header="Settings" Click="ToggleSettings_Click" />
+                                    <MenuItem Header="Responsive View" Click="ResponsiveView_Click" />
+                                    <MenuItem Header="Developer Tools" Click="DevTools_Click" />
+                                </ContextMenu>
+                            </Button.ContextMenu>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- Localhost Quick Bar -->
+            <Border Grid.Row="2" Background="#F3F4F6" BorderBrush="#D1D5DB" BorderThickness="0,0,0,1" Padding="10,2">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Localhost:" Foreground="#6B7280" VerticalAlignment="Center" FontSize="11" Margin="0,0,10,0" />
+                    <Button Content="3000" Style="{StaticResource QuickBarButtonStyle}" Click="QuickBar_Click" Tag="3000" Margin="0,0,10,0" />
+                    <Button Content="5173" Style="{StaticResource QuickBarButtonStyle}" Click="QuickBar_Click" Tag="5173" Margin="0,0,10,0" />
+                    <Button Content="8000" Style="{StaticResource QuickBarButtonStyle}" Click="QuickBar_Click" Tag="8000" Margin="0,0,10,0" />
+                    <Button Content="8080" Style="{StaticResource QuickBarButtonStyle}" Click="QuickBar_Click" Tag="8080" />
+                </StackPanel>
+            </Border>
+
+            <!-- Tab Content Area -->
+            <Grid Grid.Row="3">
+                <ContentControl x:Name="TabContent" />
+                
+                <!-- Headers Flyout -->
+                <Border x:Name="HeadersPanel" Visibility="Collapsed" HorizontalAlignment="Right" Width="300" Background="#FFFFFF" BorderBrush="#D1D5DB" BorderThickness="1,0,0,0">
+                    <Grid Margin="15">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        
+                        <TextBlock Text="Custom Request Headers" FontWeight="Bold" Foreground="Black" Margin="0,0,0,15" />
+                        
+                        <ItemsControl x:Name="HeadersList" Grid.Row="1">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="0,2">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBox Text="{Binding Key}" Background="#F3F4F6" Foreground="Black" BorderThickness="1" BorderBrush="#D1D5DB" Margin="2" />
+                                        <TextBox Grid.Column="1" Text="{Binding Value}" Background="#F3F4F6" Foreground="Black" BorderThickness="1" BorderBrush="#D1D5DB" Margin="2" />
+                                        <Button Grid.Column="2" Content="✕" Click="RemoveHeader_Click" Tag="{Binding}" Background="Transparent" Foreground="#6B7280" BorderThickness="0" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        
+                        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,15,0,0">
+                            <Button Content="Add Header" Click="AddHeader_Click" Padding="10,5" Margin="0,0,10,0" />
+                            <Button Content="Apply" Click="ApplyHeaders_Click" Background="#2ECC71" Foreground="White" Padding="15,5" BorderThickness="0" />
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <!-- Settings Flyout -->
+                <Border x:Name="SettingsPanel" Visibility="Collapsed" HorizontalAlignment="Right" Width="300" Background="#FFFFFF" BorderBrush="#D1D5DB" BorderThickness="1,0,0,0">
+                    <Grid Margin="15">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        
+                        <TextBlock Text="Browser Settings" FontWeight="Bold" Foreground="Black" Margin="0,0,0,15" />
+                        
+                        <StackPanel Grid.Row="1">
+                            <CheckBox x:Name="ConsoleVisibleCheck" Content="Console Always Visible" Foreground="Black" Click="ConsoleVisible_Click" Margin="0,0,0,10" />
+                            <CheckBox x:Name="ScrollSyncCheck" Content="Responsive Scroll Sync" Foreground="Black" IsChecked="True" Margin="0,0,0,10" />
+                            <TextBlock Text="Default New Tab URL:" Foreground="#6B7280" Margin="0,10,0,0" />
+                            <TextBox x:Name="DefaultUrlBox" Background="#F3F4F6" Foreground="Black" BorderThickness="1" BorderBrush="#D1D5DB" Padding="5" />
+                        </StackPanel>
+                        
+                        <Button Grid.Row="2" Content="Close" Click="ToggleSettings_Click" HorizontalAlignment="Right" Padding="15,5" />
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <!-- Status Bar -->
+            <Border Grid.Row="4" Background="#E5E7EB" BorderBrush="#D1D5DB" BorderThickness="0,1,0,0">
+                <Grid Margin="10,0">
+                    <TextBlock x:Name="StatusText" Text="Ready" Foreground="#6B7280" VerticalAlignment="Center" FontSize="11" />
+                    <ProgressBar x:Name="LoadProgress" Width="100" Height="4" HorizontalAlignment="Right" Background="Transparent" BorderThickness="0" />
+                </Grid>
+            </Border>
+        </Grid>
+    </Border>
+</Window>

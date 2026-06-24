@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Version>1.1</Version>
+    <Authors>advertpreneur</Authors>
+    <Company>advertpreneur</Company>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <Platforms>x64</Platforms>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <NoWarn>$(NoWarn);NU1701;NU1903</NoWarn>
+    <CefSharpAnyCpuSupport>true</CefSharpAnyCpuSupport>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Resource Include="icon.ico" />
+    <SplashScreen Include="splash.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CefSharp.Wpf.NETCore" Version="120.*" />
+    <PackageReference Include="CefSharp.Common.NETCore" Version="120.*" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Tabs\" />
+    <Folder Include="Views\" />
+    <Folder Include="Models\" />
+    <Folder Include="Services\" />
+    <Folder Include="Handlers\" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,8 @@
+<UserControl x:Class="DevBrowser.Tabs.StandardTab"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:cef="clr-namespace:CefSharp.Wpf;assembly=CefSharp.Wpf">
+    <Grid>
+        <cef:ChromiumWebBrowser x:Name="Browser" />
+    </Grid>
+</UserControl>
